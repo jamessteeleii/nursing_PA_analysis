@@ -3,10 +3,15 @@ read_data <- function() {
   
 }
 
-plot_q3 <- function(data) {
+plot_PA_importance <- function(data) {
   data |>
+    filter(!is.na(q3)) |>
+    count(q3)|>
+    mutate(pct = prop.table(n)) |>
+    add_row(q3 = "Strongly disagree") |>
     mutate(q3 = factor(q3, 
-                       levels = c("Disagree",
+                       levels = c("Strongly disagree",
+                                  "Disagree",
                                   "Neutral",
                                   "Agree",
                                   "Strongly agree",
@@ -14,9 +19,6 @@ plot_q3 <- function(data) {
                                   NA)
     )
     ) |>
-    filter(!is.na(q3)) |>
-    count(q3)|>
-    mutate(pct = prop.table(n)) |>
     ggplot(aes(x=q3)) +
     geom_col(aes(y = pct)) + 
     scale_y_continuous(name = "Percent", labels=scales::percent, breaks = c(0,0.1,0.2,0.3,0.4,0.5)) +
@@ -26,4 +28,117 @@ plot_q3 <- function(data) {
                size = 3) +
     labs(x = "Advising patients about physical activity is an important part of a nurse’s job") +
     theme_classic()
+}
+
+plot_guideline_confidence <- function(data) {
+  data |>
+    select(q6, q7, q8) |>
+    pivot_longer(c(q6, q7, q8)) |>
+    filter(!is.na(value)) |>
+    count(name, value)|>
+    group_by(name) |>
+    mutate(pct = prop.table(n)) |>
+    # add_row(q3 = "Strongly disagree") |>
+    mutate(value = factor(value, 
+                          levels = c("Strongly Disagree",
+                                     "Disagree",
+                                     "Neutral",
+                                     "Agree",
+                                     "Strongly agree",
+                                     "Unsure")
+    )
+    ) |>
+    mutate(name = case_when(name == "q6" ~ "Children and young people (under 19 years)",
+                            name == "q7" ~ "Adults (19-64 years)",
+                            name == "q8" ~ "Older Adults (65+ years)")) |>
+    ggplot(aes(x=value)) +
+    geom_col(aes(y = pct)) + 
+    scale_y_continuous(name = "Percent", labels=scales::percent, breaks = c(0,0.1,0.2,0.3,0.4,0.5)) +
+    geom_label(aes(y=pct,label=glue::glue("n = {n}")),
+               position = position_dodge(width = .9),    # move to center of bars
+               vjust = 0.5,    # nudge above top of bar
+               size = 3) +
+    labs(x = "I am confident I know the CMO's (Chief Medical Officer) physical activity guidelines for:") +
+    facet_grid(name~.) +
+    theme_classic()
+}
+
+plot_knowledge_dose <- function(data) {
+  mod_mins_plot <- data |>
+    select(q9) |>
+    pivot_longer(q9) |>
+    filter(!is.na(value) & 
+             value <= 500) |>
+    mutate(name = case_when(name == "q9" ~ "Over a week, activity should add up to at least __ minutes of moderate intensity activity")) |>
+    ggplot(aes(x=name, y=value)) +
+    geom_violin(fill="grey60") + 
+    geom_boxplot(outlier.color = NA, width = 0.2) +
+    geom_point(position = position_jitter(width = 0.05, height = 0), alpha = 0.5) +
+    geom_label(aes(y=median(value), label=glue::glue("Median = {median(value)} [IQR: {IQR(value)}]")),
+               hjust = -0.5,
+               size = 3) +
+    labs(x = "",
+         y = "Minutes") +
+    scale_x_discrete(labels = function(x) str_wrap(x, width = 50)) +
+    theme_classic() +
+    theme(axis.text.x = element_text(size=11,colour = "black"))
+  
+  
+  bout_mins_plot <- data |>
+    select(q10) |>
+    pivot_longer(q10) |>
+    filter(!is.na(value)) |>
+    mutate(name = case_when(name == "q10" ~ "Bouts of activity should last at least __ minutes")) |>
+    ggplot(aes(x=name, y=value)) +
+    geom_violin(fill="grey60") + 
+    geom_boxplot(outlier.color = NA, width = 0.2) +
+    geom_point(position = position_jitter(width = 0.05, height = 0), alpha = 0.5) +
+    geom_label(aes(y=median(value), label=glue::glue("Median = {median(value)} [IQR: {IQR(value)}]")),
+               hjust = -0.5,
+               size = 3) +
+    labs(x = "",
+         y = "Minutes") +
+    scale_x_discrete(labels = function(x) str_wrap(x, width = 50)) +
+    theme_classic() +
+    theme(axis.text.x = element_text(size=11,colour = "black"))
+  
+  
+  vig_mins_plot <- data |>
+    select(q11) |>
+    pivot_longer(q11) |>
+    filter(!is.na(value)) |>
+    mutate(name = case_when(name == "q11" ~ "Alternatively, comparable benefits can be achieved through __ minutes of vigorous intensity activity spread across the week")) |>
+    ggplot(aes(x=name, y=value)) +
+    geom_violin(fill="grey60") + 
+    geom_boxplot(outlier.color = NA, width = 0.2) +
+    geom_point(position = position_jitter(width = 0.05, height = 0), alpha = 0.5) +
+    geom_label(aes(y=median(value), label=glue::glue("Median = {median(value)} [IQR: {IQR(value)}]")),
+               hjust = -0.5,
+               size = 3) +
+    labs(x = "",
+         y = "Minutes") +
+    scale_x_discrete(labels = function(x) str_wrap(x, width = 50)) +
+    theme_classic() +
+    theme(axis.text.x = element_text(size=11,colour = "black"))
+  
+  strength_days_plot <- data |>
+    select(q12) |>
+    pivot_longer(q12) |>
+    filter(!is.na(value) &
+             value <= 7) |>
+    mutate(name = case_when(name == "q12" ~ "Adults should also undertake physical activity to improve muscle strength on at least __ days a week")) |>
+    ggplot(aes(x=name, y=value)) +
+    geom_violin(fill="grey60") + 
+    geom_boxplot(outlier.color = NA, width = 0.2) +
+    geom_point(position = position_jitter(width = 0.05, height = 0), alpha = 0.5) +
+    geom_label(aes(y=median(value), label=glue::glue("Median = {median(value)} [IQR: {IQR(value)}]")),
+               hjust = -0.5,
+               size = 3) +
+    labs(x = "",
+         y = "Days") +
+    scale_x_discrete(labels = function(x) str_wrap(x, width = 50)) +
+    theme_classic() +
+    theme(axis.text.x = element_text(size=11,colour = "black"))
+  
+  mod_mins_plot + bout_mins_plot + vig_mins_plot + strength_days_plot
 }
