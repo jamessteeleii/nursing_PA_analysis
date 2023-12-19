@@ -142,3 +142,32 @@ plot_knowledge_dose <- function(data) {
   
   mod_mins_plot + bout_mins_plot + vig_mins_plot + strength_days_plot
 }
+
+plot_knowledge_other <- function(data) {
+  data |>
+    select(q14:q18) |>
+    pivot_longer(c(q14:q18)) |>
+    filter(!is.na(value)) |>
+    mutate(name = case_when(name == "q14" ~ "Should be active daily",
+                            name == "q15" ~ "Activities such as walking do not contribute to MVPA (moderate to vigorous physical activity",
+                            name == "q16" ~ "Conduct flexibility training at least one day per week",
+                            name == "q17" ~ "Extended periods of sedentary activities should be limited ",
+                            name == "q18" ~ "Overweight adults should aim for short bouts of high intensity exercise to facilitate weight loss"
+    )) |>
+    group_by(name) |>
+    count(name, value)|>
+    mutate(pct = prop.table(n)) |>
+    ggplot(aes(x=name, fill=value)) +
+    geom_col(aes(y=pct), position = "fill") +
+    geom_label(aes(y=pct, label=glue::glue("n = {n}")),
+               position = "fill",     
+               vjust = 1.5,    # nudge above below bar
+               size = 3, show.legend = FALSE) +
+    scale_x_discrete(labels = function(x) str_wrap(x, width = 25)) +
+    scale_y_continuous(name = "Percent", labels=scales::percent) +
+    scale_fill_manual(values = c("grey60","lightgrey")) +
+    labs(x = "",
+         y = "Percent",
+         fill = "") +
+    theme_classic()
+}
