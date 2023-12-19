@@ -1,0 +1,41 @@
+q_number,key
+1,1. Please tick the appropriate box
+2,2. Which year of study are you in?
+3,3. Advising patients about physical activity is an important part of a nurse’s job: Please tick only one box:
+4,"3.a. If you selected Other, please specify:"
+5,4. I am confident I know the CMO's (Chief Medical Officer) physical activity guidelines for: Please tick only one box:
+6,4.1.a. Children and young people (under 19 years) - I am confident I know the CMO's (Chief Medical Officer) physical activity guidelines for:
+7,4.2.a. Adults (19-64 years) - I am confident I know the CMO's (Chief Medical Officer) physical activity guidelines for:
+8,4.3.a. Older Adults (65+ years) - I am confident I know the CMO's (Chief Medical Officer) physical activity guidelines for:
+9,"5. Over a week, activity should add up to at least ____________ minutes of moderate intensity activity"
+10,5.a. Bouts of activity should last at least :___________ minutes
+11,"5.b. Alternatively, comparable benefits can be achieved through __________ minutes of vigorous intensity activity spread across the week"
+12,5.c. Adults should also undertake physical activity to improve muscle strength on at least __________ days a week
+13,5.d. Which of the following is/are also stated in the guidelines for adults aged 19-64?
+14,5.d.1.a. Should be active daily
+15,5.d.2.a. Activities such as walking do not contribute to MVPA (moderate to vigorous physical activity)
+16,5.d.3.a. Conduct flexibility training at least 1 day per week
+17,5.d.4.a. Extended periods of sedentary activities should be limited
+18,5.d.5.a. Overweight adults should aim for short bouts of high intensity exercise to facilitate weight loss
+19,"6. In addition to following adult guidelines, older adults (aged 65+ years) should also: Please tick all that apply:"
+20,7. All children and young people should engage in “moderate to vigorous intensity” physical activity for at least __________ minutes per day
+21,"7.a. Vigorous intensity activities, including those that strengthen muscle and bone, should be incorporated at least __________ days per week"
+22,7.b. Which of the following is/are also included in the Guidelines for children aged 5-18? Please tick all that apply:
+23,8. Do you feel you have been adequately trained to give physical activity advice to the general population?
+24,"9. Would you like more formal training on physical activity (epidemiology, health benefits, promotion, indications and prescriptions)?"
+25,10. In which settings would you have valued more teaching on physical activity? Please tick all that apply:
+26,"10.a. If you selected Other, please specify:"
+27,11. Where have you gained your physical activity knowledge? Please tick all that apply:
+28,"11.a. If you selected Other, please specify:"
+29,"11.b. If you ticked the box to state that you participate in physical activity or sport regularly, please give details of what you do."
+30,12. How physically active would you rate yourself compared to an average university student? Please tick one box only:
+31,13. Please give 3 examples of what types of physical activity that you believe are at a moderate intensity.
+32,13.1.a. Example 1 - Examples of moderate intensity physical activity
+33,13.2.a. Example 2 - Examples of moderate intensity physical activity
+34,13.3.a. Example 3 - Examples of moderate intensity physical activity
+35,14. Please give 3 examples of what types of physical activity that you believe are at a high intensity.
+36,14.1.a. Example 1 - Examples of high intensity physical activity
+37,14.2.a. Example 2 - Examples of high intensity physical activity
+38,14.3.a. Example 3 - Examples of high intensity physical activity
+39,"15. In the past week, how much moderate intensity physical activity have you completed in total? This refers to activity you do that gets you out of breath or raises your heart beat – this is called moderate intensity activity. This may include sport, exercise, and brisk walking or cycling for recreation or to get to and from places, but should not include housework or physical activity that may be part of your job."
+40,CompletionDate
