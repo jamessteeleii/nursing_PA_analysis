@@ -3,6 +3,19 @@ read_data <- function() {
   
 }
 
+make_plot_tiff <- function(plot, width, height, path) {
+  ggsave(
+    path,
+    plot,
+    width = width,
+    height = height,
+    device = "tiff",
+    dpi = 300
+  )
+  
+}
+
+
 plot_PA_importance <- function(data) {
   data |>
     filter(!is.na(q3)) |>
@@ -21,12 +34,13 @@ plot_PA_importance <- function(data) {
     ) |>
     ggplot(aes(x=q3)) +
     geom_col(aes(y = pct)) + 
-    scale_y_continuous(name = "Percent", labels=scales::percent, breaks = c(0,0.1,0.2,0.3,0.4,0.5)) +
-    geom_label(aes(y=pct,label=glue::glue("n = {n}")),
+    scale_y_continuous(name = "Percent", labels=percent, breaks = c(0,0.1,0.2,0.3,0.4,0.5)) +
+    geom_label(aes(y=pct,label=glue("n = {n}")),
                position = position_dodge(width = .9),    # move to center of bars
                vjust = 0.5,    # nudge above top of bar
                size = 3) +
-    labs(x = "Advising patients about physical activity is an important part of a nurse’s job") +
+    labs(x = "",
+         title = "Advising patients about physical activity is an important part of a nurse’s job") +
     theme_classic()
 }
 
@@ -53,12 +67,13 @@ plot_guideline_confidence <- function(data) {
                             name == "q8" ~ "Older Adults (65+ years)")) |>
     ggplot(aes(x=value)) +
     geom_col(aes(y = pct)) + 
-    scale_y_continuous(name = "Percent", labels=scales::percent, breaks = c(0,0.1,0.2,0.3,0.4,0.5)) +
-    geom_label(aes(y=pct,label=glue::glue("n = {n}")),
+    scale_y_continuous(name = "Percent", labels=percent, breaks = c(0,0.1,0.2,0.3,0.4,0.5)) +
+    geom_label(aes(y=pct,label=glue("n = {n}")),
                position = position_dodge(width = .9),    # move to center of bars
                vjust = 0.5,    # nudge above top of bar
                size = 3) +
-    labs(x = "I am confident I know the CMO's (Chief Medical Officer) physical activity guidelines for:") +
+    labs(x = "",
+         title = "I am confident I know the CMO's (Chief Medical Officer) physical activity guidelines for") +
     facet_grid(name~.) +
     theme_classic()
 }
@@ -74,14 +89,13 @@ plot_knowledge_dose_adult <- function(data) {
     geom_violin(fill="grey60") + 
     geom_boxplot(outlier.color = NA, width = 0.2) +
     geom_point(position = position_jitter(width = 0.05, height = 0), alpha = 0.5) +
-    geom_label(aes(y=median(value), label=glue::glue("Median = {median(value)} [IQR: {IQR(value)}]")),
-               hjust = -0.5,
+    geom_label(aes(y=median(value), label=glue("Median = {median(value)} [IQR: {IQR(value)}]")),
+               hjust = -0.4,
                size = 3) +
     labs(x = "",
          y = "Minutes") +
     scale_x_discrete(labels = function(x) str_wrap(x, width = 50)) +
-    theme_classic() +
-    theme(axis.text.x = element_text(size=11,colour = "black"))
+    theme_classic()
   
   
   bout_mins_plot <- data |>
@@ -93,14 +107,13 @@ plot_knowledge_dose_adult <- function(data) {
     geom_violin(fill="grey60") + 
     geom_boxplot(outlier.color = NA, width = 0.2) +
     geom_point(position = position_jitter(width = 0.05, height = 0), alpha = 0.5) +
-    geom_label(aes(y=median(value), label=glue::glue("Median = {median(value)} [IQR: {IQR(value)}]")),
+    geom_label(aes(y=median(value), label=glue("Median = {median(value)} [IQR: {IQR(value)}]")),
                hjust = -0.5,
                size = 3) +
     labs(x = "",
          y = "Minutes") +
     scale_x_discrete(labels = function(x) str_wrap(x, width = 50)) +
-    theme_classic() +
-    theme(axis.text.x = element_text(size=11,colour = "black"))
+    theme_classic()
   
   
   vig_mins_plot <- data |>
@@ -112,14 +125,13 @@ plot_knowledge_dose_adult <- function(data) {
     geom_violin(fill="grey60") + 
     geom_boxplot(outlier.color = NA, width = 0.2) +
     geom_point(position = position_jitter(width = 0.05, height = 0), alpha = 0.5) +
-    geom_label(aes(y=median(value), label=glue::glue("Median = {median(value)} [IQR: {IQR(value)}]")),
+    geom_label(aes(y=median(value), label=glue("Median = {median(value)} [IQR: {IQR(value)}]")),
                hjust = -0.5,
                size = 3) +
     labs(x = "",
          y = "Minutes") +
     scale_x_discrete(labels = function(x) str_wrap(x, width = 50)) +
-    theme_classic() +
-    theme(axis.text.x = element_text(size=11,colour = "black"))
+    theme_classic()
   
   strength_days_plot <- data |>
     select(q12) |>
@@ -131,16 +143,16 @@ plot_knowledge_dose_adult <- function(data) {
     geom_violin(fill="grey60") + 
     geom_boxplot(outlier.color = NA, width = 0.2) +
     geom_point(position = position_jitter(width = 0.05, height = 0), alpha = 0.5) +
-    geom_label(aes(y=median(value), label=glue::glue("Median = {median(value)} [IQR: {IQR(value)}]")),
+    geom_label(aes(y=median(value), label=glue("Median = {median(value)} [IQR: {IQR(value)}]")),
                hjust = -0.5,
                size = 3) +
     labs(x = "",
          y = "Days") +
     scale_x_discrete(labels = function(x) str_wrap(x, width = 50)) +
-    theme_classic() +
-    theme(axis.text.x = element_text(size=11,colour = "black"))
+    theme_classic() 
   
-  mod_mins_plot + bout_mins_plot + vig_mins_plot + strength_days_plot
+  (mod_mins_plot + bout_mins_plot + vig_mins_plot + strength_days_plot) +
+    plot_annotation(title = "Please complete the UK CMO physical activity guidelines for adults aged 19-64")
 }
 
 plot_knowledge_other_adult <- function(data) {
@@ -159,16 +171,18 @@ plot_knowledge_other_adult <- function(data) {
     mutate(pct = prop.table(n)) |>
     ggplot(aes(x=name, fill=value)) +
     geom_col(aes(y=pct), position = "fill") +
-    geom_label(aes(y=pct, label=glue::glue("n = {n}")),
+    geom_label(aes(y=pct, label=glue("n = {n}")),
                position = "fill",     
                vjust = 1.5,    # nudge above below bar
                size = 3, show.legend = FALSE) +
     scale_x_discrete(labels = function(x) str_wrap(x, width = 25)) +
-    scale_y_continuous(name = "Percent", labels=scales::percent) +
+    scale_y_continuous(name = "Percent", labels=percent) +
     scale_fill_manual(values = c("grey60","lightgrey")) +
     labs(x = "",
          y = "Percent",
-         fill = "") +
+         fill = "",
+         title = "Which of the following is/are also stated in the guidelines for adults aged 19-64?",
+         subtitle = "Please tick all that apply") +
     theme_classic()
 }
 
@@ -194,15 +208,15 @@ plot_knowledge_older_adult <- function(data) {
                                      "None of the above"))) |>
     ggplot(aes(x=value)) +
     geom_col(aes(y = pct)) + 
-    scale_y_continuous(name = "Percent", labels=scales::percent, breaks = c(0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1)) +
+    scale_y_continuous(name = "Percent", labels=percent, breaks = c(0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1)) +
     scale_x_discrete(labels = function(x) str_wrap(x, width = 25)) +
-    geom_label(aes(y=pct,label=glue::glue("n = {n}")),
+    geom_label(aes(y=pct,label=glue("n = {n}")),
                position = position_dodge(width = .9),    # move to center of bars
                vjust = 0.5,    # nudge above top of bar
                size = 3) +
-    labs(x = "") +
-    theme_classic() +
-    theme(axis.text.x = element_text(size=11,colour = "black"))
+    labs(x = "",
+         title = "In addition to following adult guidelines, older adults (aged 65+ years) should also") +
+    theme_classic()
 }
 
 plot_knowledge_dose_child <- function(data) {
@@ -216,14 +230,13 @@ plot_knowledge_dose_child <- function(data) {
     geom_violin(fill="grey60") + 
     geom_boxplot(outlier.color = NA, width = 0.2) +
     geom_point(position = position_jitter(width = 0.05, height = 0), alpha = 0.5) +
-    geom_label(aes(y=median(value), label=glue::glue("Median = {median(value)} [IQR: {IQR(value)}]")),
+    geom_label(aes(y=median(value), label=glue("Median = {median(value)} [IQR: {IQR(value)}]")),
                hjust = -0.5,
                size = 3) +
     labs(x = "",
          y = "Minutes") +
     scale_x_discrete(labels = function(x) str_wrap(x, width = 50)) +
-    theme_classic() +
-    theme(axis.text.x = element_text(size=11,colour = "black"))
+    theme_classic() 
   
   
   vig_days_plot <- data |>
@@ -236,16 +249,17 @@ plot_knowledge_dose_child <- function(data) {
     geom_violin(fill="grey60") + 
     geom_boxplot(outlier.color = NA, width = 0.2) +
     geom_point(position = position_jitter(width = 0.05, height = 0), alpha = 0.5) +
-    geom_label(aes(y=median(value), label=glue::glue("Median = {median(value)} [IQR: {IQR(value)}]")),
+    geom_label(aes(y=median(value), label=glue("Median = {median(value)} [IQR: {IQR(value)}]")),
                hjust = -0.5,
                size = 3) +
     labs(x = "",
          y = "Days") +
     scale_x_discrete(labels = function(x) str_wrap(x, width = 50)) +
-    theme_classic() +
-    theme(axis.text.x = element_text(size=11,colour = "black"))
+    theme_classic() 
   
-  mod_mins_plot + vig_days_plot
+  (mod_mins_plot + vig_days_plot) +
+    plot_annotation(title = "Please complete the UK CMO physical activity guidelines for children aged 5-18")
+  
 }
 
 plot_knowledge_other_child <- function(data) {
@@ -265,15 +279,16 @@ plot_knowledge_other_child <- function(data) {
                                      "None of the above"))) |>
     ggplot(aes(x=value)) +
     geom_col(aes(y = pct)) + 
-    scale_y_continuous(name = "Percent", labels=scales::percent, breaks = c(0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1)) +
+    scale_y_continuous(name = "Percent", labels=percent, breaks = c(0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1)) +
     scale_x_discrete(labels = function(x) str_wrap(x, width = 25)) +
-    geom_label(aes(y=pct,label=glue::glue("n = {n}")),
+    geom_label(aes(y=pct,label=glue("n = {n}")),
                position = position_dodge(width = .9),    # move to center of bars
                vjust = 0.5,    # nudge above top of bar
                size = 3) +
-    labs(x = "") +
-    theme_classic() +
-    theme(axis.text.x = element_text(size=11,colour = "black"))
+    labs(x = "",
+         title = "Which of the following is/are also included in the Guidelines for children aged 5-18?",
+         subtitle = "Please tick all that apply") +
+    theme_classic()
 }
 
 plot_training <- function(data) {
@@ -289,16 +304,17 @@ plot_training <- function(data) {
     mutate(pct = prop.table(n)) |>
     ggplot(aes(x=name, fill=value)) +
     geom_col(aes(y=pct), position = "fill") +
-    geom_label(aes(y=pct, label=glue::glue("n = {n}")),
+    geom_label(aes(y=pct, label=glue("n = {n}")),
                position = "fill",     
                vjust = 1.5,    # nudge above below bar
                size = 3, show.legend = FALSE) +
     scale_x_discrete(labels = function(x) str_wrap(x, width = 25)) +
-    scale_y_continuous(name = "Percent", labels=scales::percent) +
+    scale_y_continuous(name = "Percent", labels=percent) +
     scale_fill_manual(values = c("grey60","lightgrey")) +
     labs(x = "",
          y = "Percent",
-         fill = "") +
+         fill = "",
+         title = "Training on Physical Activity") +
     theme_classic()
 }
 
@@ -320,15 +336,15 @@ plot_training_settings <- function(data) {
                                      "Other"))) |>
     ggplot(aes(x=value)) +
     geom_col(aes(y = pct)) + 
-    scale_y_continuous(name = "Percent", labels=scales::percent, breaks = c(0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1)) +
+    scale_y_continuous(name = "Percent", labels=percent, breaks = c(0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1)) +
     scale_x_discrete(labels = function(x) str_wrap(x, width = 25)) +
-    geom_label(aes(y=pct,label=glue::glue("n = {n}")),
+    geom_label(aes(y=pct,label=glue("n = {n}")),
                position = position_dodge(width = .9),    # move to center of bars
                vjust = 0.5,    # nudge above top of bar
                size = 3) +
-    labs(x = "") +
-    theme_classic() +
-    theme(axis.text.x = element_text(size=11,colour = "black"))
+    labs(x = "",
+         title = "In which settings would you have valued more teaching on physical activity?") +
+    theme_classic() 
   
 }
 
@@ -414,15 +430,15 @@ plot_knowledge_sources <- function(data) {
                                      "Other"))) |>
     ggplot(aes(x=value)) +
     geom_col(aes(y = pct)) + 
-    scale_y_continuous(name = "Percent", labels=scales::percent, breaks = c(0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1)) +
+    scale_y_continuous(name = "Percent", labels=percent, breaks = c(0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1)) +
     scale_x_discrete(labels = function(x) str_wrap(x, width = 25)) +
-    geom_label(aes(y=pct,label=glue::glue("n = {n}")),
+    geom_label(aes(y=pct,label=glue("n = {n}")),
                position = position_dodge(width = .9),    # move to center of bars
                vjust = 0.5,    # nudge above top of bar
                size = 3) +
-    labs(x = "") +
-    theme_classic() +
-    theme(axis.text.x = element_text(size=11,colour = "black"))
+    labs(x = "",
+         title = "Where have you gained your physical activity knowledge?") +
+    theme_classic() 
 }
 
 plot_PA_levels <- function(data) {
@@ -442,13 +458,14 @@ plot_PA_levels <- function(data) {
     ) |>
     ggplot(aes(x=value)) +
     geom_col(aes(y = pct)) + 
-    scale_y_continuous(name = "Percent", labels=scales::percent, breaks = c(0,0.1,0.2,0.3,0.4,0.5)) +
-    geom_label(aes(y=pct,label=glue::glue("n = {n}")),
+    scale_y_continuous(name = "Percent", labels=percent, breaks = c(0,0.1,0.2,0.3,0.4,0.5)) +
+    geom_label(aes(y=pct,label=glue("n = {n}")),
                position = position_dodge(width = .9),    # move to center of bars
                vjust = 0.5,    # nudge above top of bar
                size = 3) +
-    labs(x="How physically active would you rate yourself compared to an average university student?") +
-    theme_classic()
+    labs(x=str_wrap("How physically active would you rate yourself compared to an average university student?",50)) +
+    theme_classic() +
+    theme(axis.title.x = element_text(size=10))
   
   
   PA_mins <- data |>
@@ -466,13 +483,536 @@ plot_PA_levels <- function(data) {
     ) |>
     ggplot(aes(x=value)) +
     geom_col(aes(y = pct)) + 
-    scale_y_continuous(name = "Percent", labels=scales::percent, breaks = c(0,0.1,0.2,0.3,0.4,0.5)) +
-    geom_label(aes(y=pct,label=glue::glue("n = {n}")),
+    scale_y_continuous(name = "Percent", labels=percent, breaks = c(0,0.1,0.2,0.3,0.4,0.5)) +
+    geom_label(aes(y=pct,label=glue("n = {n}")),
                position = position_dodge(width = .9),    # move to center of bars
                vjust = 0.5,    # nudge above top of bar
                size = 3) +
-    labs(x="15.	In the past week, how much moderate intensity physical activity have you completed in total? ") +
+    labs(x=str_wrap("In the past week, how much moderate intensity physical activity have you completed in total?",50)) +
+    theme_classic() +
+    theme(axis.title.x = element_text(size=10))
+  
+  (student_PA_comparison + PA_mins) +
+    plot_annotation(title = "Physical Activity Levels")
+}
+
+plot_example_mod_activities <- function(data) {
+  
+  
+  # Let's create tokens
+  data("stop_words")
+  
+  data_tokens <- data |>
+    select(q32:q34) |>
+    rowid_to_column("id") |>
+    pivot_longer(q32:q34) |>
+    unnest_tokens(word, value) |>
+    anti_join(stop_words) |>
+    filter(!is.na(word)) 
+  
+  # spelling errors - https://books.psychstat.org/textmining/data.html
+  words <- unique(data_tokens$word)
+  bad_words <- hunspell(words)
+  bad_words <- unique(unlist(bad_words))
+  suggest_words <- hunspell_suggest(bad_words)
+  suggest_words <- unlist(lapply(suggest_words, function(x) x[1]))
+  
+  
+  # # combine and compare suggestions (manually checked obvious errors)
+  #
+  bad_suggest_words <- bind_cols(bad_words, suggest_words)
+  
+  count_words <- count(data_tokens, word)
+  
+  bad_suggest_words <- inner_join(count_words, bad_suggest_words, by = c(word = "...1"))
+  
+  # Recode the incorrect suggestions manually with more than 2 uses
+  # (manually editing original if obvious incorrect spelling)
+  suggest_words <- recode(suggest_words,
+                          "kangaroo" = "kangoo",
+                          "Nintendo" = "nintendo",
+                          "Pilates" = "pilates",
+                          "push up" = "pushup",
+                          "setup" = "situp",
+                          "tie" = "tai",
+                          "rumba" = "zumba"
+  )
+  
+  
+  ### Add checking the suggestions
+  
+  bad_whole_words <- paste0("\\b", bad_words, "\\b")
+  
+  data_tokens$word <- stri_replace_all_regex(data_tokens$word, bad_whole_words, suggest_words,
+                                             vectorize_all = FALSE)
+  
+  # for all double barrel terms split unnest again
+  data_tokens <-  data_tokens |>
+    unnest_tokens(word, word) |>
+    filter(!is.na(word)) |>
+    rowwise() |>
+    mutate(word = singularize(word, dictionary = TRUE))
+  
+  
+  # reunite words back into their individual examples
+  data_tokens_wide <- data_tokens |>
+    group_by(id) |>
+    rowid_to_column() |>
+    pivot_wider(id_cols = c(id, rowid),
+                names_from = name,
+                values_from = word) 
+  
+  example_one <- data_tokens_wide |>
+    select(id,q32) |>
+    group_by(id) |> 
+    filter(!is.na(q32)) |>
+    mutate(word = row_number(),
+           word = paste("word",word)) |>
+    pivot_wider(id_cols = id,
+                names_from = word,
+                values_from = q32) |>
+    unite("Example One", c(2:5), sep = " ", remove = TRUE, na.rm = TRUE)
+  
+  example_two <- data_tokens_wide |>
+    select(id,q33) |>
+    group_by(id) |> 
+    filter(!is.na(q33)) |>
+    mutate(word = row_number(),
+           word = paste("word",word)) |>
+    pivot_wider(id_cols = id,
+                names_from = word,
+                values_from = q33) |>
+    unite("Example Two", c(2:6), sep = " ", remove = TRUE, na.rm = TRUE)
+  
+  example_three <- data_tokens_wide |>
+    select(id,q34) |>
+    group_by(id) |> 
+    filter(!is.na(q34)) |>
+    mutate(word = row_number(),
+           word = paste("word",word)) |>
+    pivot_wider(id_cols = id,
+                names_from = word,
+                values_from = q34) |>
+    unite("Example Three", c(2:7), sep = " ", remove = TRUE, na.rm = TRUE)
+  
+  data_tokens_reunited <- left_join(example_one, example_two, by = "id") |>
+    left_join(example_three, by = "id") |>
+    pivot_longer(2:4, 
+                 names_to = "example_number",
+                 values_to = "response") |>
+    filter(!is.na(response)) |>
+    mutate(example_number = factor(example_number,
+                                   levels = c("Example One",
+                                              "Example Two",
+                                              "Example Three")))
+  
+  # Plot simple counts
+  simple_count_plot <- data_tokens_reunited |>
+    ungroup() |>
+    count(response, example_number, sort = TRUE) |>
+    mutate(pct = prop.table(n)) |>
+    filter(n > 2) |>
+    mutate(response = reorder(response, n)) |>
+    ggplot(aes(pct, response)) +
+    geom_col() +
+    scale_x_continuous(name = "Percent", labels=percent, 
+                       breaks = seq(from=0,to=0.10, by=0.025),
+                       limits = c(0,0.11)) +
+    geom_label(aes(x=pct,label=glue("n = {n}")),
+               position = position_dodge(width = .9),    # move to center of bars
+               vjust = 0.5,    # nudge above top of bar
+               size = 2,
+               label.padding = unit(0.15, "lines")) +
+    labs(y = NULL) +
+    facet_grid(.~example_number) +
     theme_classic()
   
-  student_PA_comparison + PA_mins
+  
+  # Common bigrams
+  data_bigrams <- data |>
+    select(q32:q34) |>
+    rowid_to_column("id") |>
+    pivot_longer(q32:q34) |>
+    unnest_tokens(bigram, value, token = "ngrams", n =2) |>
+    separate(bigram, into = c("word1", "word2"), sep = " ") |>
+    filter(!word1 %in% stop_words$word) |>
+    filter(!word2 %in% stop_words$word) |>
+    filter(!is.na(word1)) |>
+    filter(!is.na(word2)) |>
+    rowid_to_column()
+  
+  # spelling errors - https://books.psychstat.org/textmining/data.html
+  words1 <- unique(data_bigrams$word1)
+  bad_words1 <- hunspell(words1)
+  bad_words1 <- unique(unlist(bad_words1))
+  suggest_words1 <- hunspell_suggest(bad_words1)
+  suggest_words1 <- unlist(lapply(suggest_words1, function(x) x[1]))
+  
+  # Recode the incorrect suggestions manually with more than 2 uses
+  # (manually editing original if obvious incorrect spelling)
+  suggest_words1 <- recode(suggest_words1,
+                           "kangaroo" = "kangoo",
+                           "Nintendo" = "nintendo",
+                           "Pilates" = "pilates",
+                           "push up" = "pushup",
+                           "setup" = "situp",
+                           "tie" = "tai",
+                           "rumba" = "zumba"
+  )
+  
+  
+  ### Add checking the suggestions
+  
+  bad_whole_words1 <- paste0("\\b", bad_words1, "\\b")
+  
+  
+  data_bigrams$word1 <- stri_replace_all_regex(data_bigrams$word1, bad_whole_words1, suggest_words1,
+                                               vectorize_all = FALSE)
+  
+  # spelling errors - https://books.psychstat.org/textmining/data.html
+  words2 <- unique(data_bigrams$word2)
+  bad_words2 <- hunspell(words2)
+  bad_words2 <- unique(unlist(bad_words2))
+  suggest_words2 <- hunspell_suggest(bad_words2)
+  suggest_words2 <- unlist(lapply(suggest_words2, function(x) x[1]))
+  
+  # Recode the incorrect suggestions manually with more than 2 uses
+  # (manually editing original if obvious incorrect spelling)
+  suggest_words2 <- recode(suggest_words2,
+                           "kangaroo" = "kangoo",
+                           "Nintendo" = "nintendo",
+                           "Pilates" = "pilates",
+                           "push up" = "pushup",
+                           "setup" = "situp",
+                           "tie" = "tai",
+                           "rumba" = "zumba"
+  )
+  
+  
+  ### Add checking the suggestions
+  
+  bad_whole_words2 <- paste0("\\b", bad_words2, "\\b")
+  
+  data_bigrams$word2 <- stri_replace_all_regex(data_bigrams$word2, bad_whole_words2, suggest_words2,
+                                               vectorize_all = FALSE)
+  
+  data_bigrams <- data_bigrams |>
+    unite(response_name, c("word1","word2"), sep = " ") |>
+    unnest_tokens(bigram, response_name, token = "ngrams", n =2) |>
+    separate(bigram, into = c("word1", "word2"), sep = " ") |>
+    filter(!word1 %in% stop_words$word) |>
+    filter(!word2 %in% stop_words$word) |>
+    mutate(word1 = na_if(word1, "na"),
+           word2 = na_if(word2, "na")) |>
+    filter(!is.na(word1)) |>
+    filter(!is.na(word2)) |>
+    rowwise() |>
+    mutate(word1 = singularize(word1, dictionary = TRUE),
+           word2 = singularize(word2, dictionary = TRUE)) |>
+    mutate(name = case_when(name == "q32" ~ "Example One",
+                            name == "q33" ~ "Example Two",
+                            name == "q34" ~ "Example Three"),
+           example_number = factor(name,
+                                   levels = c("Example One",
+                                              "Example Two",
+                                              "Example Three"))
+    )
+  
+  example_number <- sort(unique(data_bigrams$name))
+  
+  bigram_plots <- list()
+  
+  for(i in example_number) {
+    bigram_counts <- data_bigrams |>
+      filter(example_number == i) |>
+      count(word1, word2, sort = TRUE) |>
+      select(word1, word2, n) |>
+      filter(n > 1) |>
+      as_tbl_graph()
+    
+    set.seed(2020)
+    
+    a <- arrow(length = unit(.1, "inches"))
+    
+    bigram_plot <- ggraph(bigram_counts, layout = 'grid') +
+      geom_edge_arc(aes(edge_alpha = n,
+                        start_cap = label_rect(node1.name),
+                        end_cap = label_rect(node2.name)),
+                    show.legend = FALSE,
+                    arrow = arrow(angle = 20, length = unit(2, 'mm')))  +
+      geom_node_point(color = NA, size = 10) +
+      geom_node_label(aes(label = name), size = 2, label.padding = unit(0.1, "lines")) +
+      labs(title = paste(i)) +
+      theme_graph() +
+      theme(plot.title = element_text(size = 10),
+            panel.border = element_rect(colour = "black", fill=NA))
+    
+    bigram_plots[[i]] <- bigram_plot
+    
+  }
+  
+  (simple_count_plot /
+    (bigram_plots$`Example One` + bigram_plots$`Example Two` + bigram_plots$`Example Three`)) +
+    plot_annotation(title = "Please give 3 examples of what types of physical activity that you believe are at a moderate intensity")
+  
+}
+
+plot_example_vig_activities <- function(data) {
+  
+  
+  # Let's create tokens
+  data("stop_words")
+  
+  data_tokens <- data |>
+    select(q36:q38) |>
+    rowid_to_column("id") |>
+    pivot_longer(q36:q38) |>
+    unnest_tokens(word, value) |>
+    anti_join(stop_words) |>
+    filter(!is.na(word)) 
+  
+  # spelling errors - https://books.psychstat.org/textmining/data.html
+  words <- unique(data_tokens$word)
+  bad_words <- hunspell(words)
+  bad_words <- unique(unlist(bad_words))
+  suggest_words <- hunspell_suggest(bad_words)
+  suggest_words <- unlist(lapply(suggest_words, function(x) x[1]))
+  
+  
+  # # combine and compare suggestions (manually checked obvious errors)
+  #
+  bad_suggest_words <- bind_cols(bad_words, suggest_words)
+  
+  count_words <- count(data_tokens, word)
+  
+  bad_suggest_words <- inner_join(count_words, bad_suggest_words, by = c(word = "...1"))
+  
+  # Recode the incorrect suggestions manually with more than 2 uses
+  # (manually editing original if obvious incorrect spelling)
+  suggest_words <- recode(suggest_words,
+                          "cross fit" = "crossfit",
+                          "kraal" = "krav",
+                          "mags" = "maga",
+                          "Pilates" = "pilates",
+                          "pilasters" = "pilates",
+                          "rumba" = "zumba"
+  )
+  
+  
+  ### Add checking the suggestions
+  
+  bad_whole_words <- paste0("\\b", bad_words, "\\b")
+  
+  data_tokens$word <- stri_replace_all_regex(data_tokens$word, bad_whole_words, suggest_words,
+                                             vectorize_all = FALSE)
+  
+  # for all double barrel terms split unnest again
+  data_tokens <-  data_tokens |>
+    unnest_tokens(word, word) |>
+    filter(!is.na(word)) |>
+    rowwise() |>
+    mutate(word = singularize(word, dictionary = TRUE))
+  
+  
+  # reunite words back into their individual examples
+  data_tokens_wide <- data_tokens |>
+    group_by(id) |>
+    rowid_to_column() |>
+    pivot_wider(id_cols = c(id, rowid),
+                names_from = name,
+                values_from = word) 
+  
+  example_one <- data_tokens_wide |>
+    select(id,q36) |>
+    group_by(id) |> 
+    filter(!is.na(q36)) |>
+    mutate(word = row_number(),
+           word = paste("word",word)) |>
+    pivot_wider(id_cols = id,
+                names_from = word,
+                values_from = q36) |>
+    unite("Example One", c(2:4), sep = " ", remove = TRUE, na.rm = TRUE)
+  
+  example_two <- data_tokens_wide |>
+    select(id,q37) |>
+    group_by(id) |> 
+    filter(!is.na(q37)) |>
+    mutate(word = row_number(),
+           word = paste("word",word)) |>
+    pivot_wider(id_cols = id,
+                names_from = word,
+                values_from = q37) |>
+    unite("Example Two", c(2:6), sep = " ", remove = TRUE, na.rm = TRUE)
+  
+  example_three <- data_tokens_wide |>
+    select(id,q38) |>
+    group_by(id) |> 
+    filter(!is.na(q38)) |>
+    mutate(word = row_number(),
+           word = paste("word",word)) |>
+    pivot_wider(id_cols = id,
+                names_from = word,
+                values_from = q38) |>
+    unite("Example Three", c(2:5), sep = " ", remove = TRUE, na.rm = TRUE)
+  
+  data_tokens_reunited <- left_join(example_one, example_two, by = "id") |>
+    left_join(example_three, by = "id") |>
+    pivot_longer(2:4, 
+                 names_to = "example_number",
+                 values_to = "response") |>
+    filter(!is.na(response)) |>
+    mutate(example_number = factor(example_number,
+                                   levels = c("Example One",
+                                              "Example Two",
+                                              "Example Three")))
+  
+  # Plot simple counts
+  simple_count_plot <- data_tokens_reunited |>
+    ungroup() |>
+    count(response, example_number, sort = TRUE) |>
+    mutate(pct = prop.table(n)) |>
+    filter(n > 2) |>
+    mutate(response = reorder(response, n)) |>
+    ggplot(aes(pct, response)) +
+    geom_col() +
+    scale_x_continuous(name = "Percent", labels=percent, 
+                       breaks = seq(from=0,to=0.05, by=0.0125),
+                       limits = c(0,0.055)) +
+    geom_label(aes(x=pct,label=glue("n = {n}")),
+               position = position_dodge(width = .9),    # move to center of bars
+               vjust = 0.5,    # nudge above top of bar
+               size = 2,
+               label.padding = unit(0.15, "lines")) +
+    labs(y = NULL) +
+    facet_grid(.~example_number) +
+    theme_classic()
+  
+  
+  # Common bigrams
+  data_bigrams <- data |>
+    select(q36:q38) |>
+    rowid_to_column("id") |>
+    pivot_longer(q36:q38) |>
+    unnest_tokens(bigram, value, token = "ngrams", n =2) |>
+    separate(bigram, into = c("word1", "word2"), sep = " ") |>
+    filter(!word1 %in% stop_words$word) |>
+    filter(!word2 %in% stop_words$word) |>
+    filter(!is.na(word1)) |>
+    filter(!is.na(word2)) |>
+    rowid_to_column()
+  
+  # spelling errors - https://books.psychstat.org/textmining/data.html
+  words1 <- unique(data_bigrams$word1)
+  bad_words1 <- hunspell(words1)
+  bad_words1 <- unique(unlist(bad_words1))
+  suggest_words1 <- hunspell_suggest(bad_words1)
+  suggest_words1 <- unlist(lapply(suggest_words1, function(x) x[1]))
+  
+  # Recode the incorrect suggestions manually with more than 2 uses
+  # (manually editing original if obvious incorrect spelling)
+  suggest_words1 <- recode(suggest_words1,
+                           "kangaroo" = "kangoo",
+                           "Nintendo" = "nintendo",
+                           "Pilates" = "pilates",
+                           "push up" = "pushup",
+                           "setup" = "situp",
+                           "tie" = "tai",
+                           "rumba" = "zumba"
+  )
+  
+  
+  ### Add checking the suggestions
+  
+  bad_whole_words1 <- paste0("\\b", bad_words1, "\\b")
+  
+  
+  data_bigrams$word1 <- stri_replace_all_regex(data_bigrams$word1, bad_whole_words1, suggest_words1,
+                                               vectorize_all = FALSE)
+  
+  # spelling errors - https://books.psychstat.org/textmining/data.html
+  words2 <- unique(data_bigrams$word2)
+  bad_words2 <- hunspell(words2)
+  bad_words2 <- unique(unlist(bad_words2))
+  suggest_words2 <- hunspell_suggest(bad_words2)
+  suggest_words2 <- unlist(lapply(suggest_words2, function(x) x[1]))
+  
+  # Recode the incorrect suggestions manually with more than 2 uses
+  # (manually editing original if obvious incorrect spelling)
+  suggest_words2 <- recode(suggest_words2,
+                           "kangaroo" = "kangoo",
+                           "Nintendo" = "nintendo",
+                           "Pilates" = "pilates",
+                           "push up" = "pushup",
+                           "setup" = "situp",
+                           "tie" = "tai",
+                           "rumba" = "zumba"
+  )
+  
+  
+  ### Add checking the suggestions
+  
+  bad_whole_words2 <- paste0("\\b", bad_words2, "\\b")
+  
+  data_bigrams$word2 <- stri_replace_all_regex(data_bigrams$word2, bad_whole_words2, suggest_words2,
+                                               vectorize_all = FALSE)
+  
+  data_bigrams <- data_bigrams |>
+    unite(response_name, c("word1","word2"), sep = " ") |>
+    unnest_tokens(bigram, response_name, token = "ngrams", n =2) |>
+    separate(bigram, into = c("word1", "word2"), sep = " ") |>
+    filter(!word1 %in% stop_words$word) |>
+    filter(!word2 %in% stop_words$word) |>
+    mutate(word1 = na_if(word1, "na"),
+           word2 = na_if(word2, "na")) |>
+    filter(!is.na(word1)) |>
+    filter(!is.na(word2)) |>
+    rowwise() |>
+    mutate(word1 = singularize(word1, dictionary = TRUE),
+           word2 = singularize(word2, dictionary = TRUE)) |>
+    mutate(name = case_when(name == "q36" ~ "Example One",
+                            name == "q37" ~ "Example Two",
+                            name == "q38" ~ "Example Three"),
+           example_number = factor(name,
+                                   levels = c("Example One",
+                                              "Example Two",
+                                              "Example Three"))
+    )
+  
+  example_number <- sort(unique(data_bigrams$name))
+  
+  bigram_plots <- list()
+  
+  for(i in example_number) {
+    bigram_counts <- data_bigrams |>
+      filter(example_number == i) |>
+      count(word1, word2, sort = TRUE) |>
+      select(word1, word2, n) |>
+      filter(n > 1) |>
+      as_tbl_graph()
+    
+    set.seed(2020)
+    
+    a <- arrow(length = unit(.1, "inches"))
+    
+    bigram_plot <- ggraph(bigram_counts, layout = 'grid') +
+      geom_edge_arc(aes(edge_alpha = n,
+                        start_cap = label_rect(node1.name),
+                        end_cap = label_rect(node2.name)),
+                    show.legend = FALSE,
+                    arrow = arrow(angle = 20, length = unit(2, 'mm')))  +
+      geom_node_point(color = NA, size = 10) +
+      geom_node_label(aes(label = name), size = 2, label.padding = unit(0.1, "lines")) +
+      labs(title = paste(i)) +
+      theme_graph() +
+      theme(plot.title = element_text(size = 10),
+            panel.border = element_rect(colour = "black", fill=NA))
+    
+    bigram_plots[[i]] <- bigram_plot
+    
+  }
+  
+  (simple_count_plot /
+      (bigram_plots$`Example One` + bigram_plots$`Example Two` + bigram_plots$`Example Three`)) +
+    plot_annotation(title = "Please give 3 examples of what types of physical activity that you believe are at a high intensity")
+  
 }

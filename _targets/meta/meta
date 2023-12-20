@@ -1,0 +1,43 @@
+name|type|data|command|depend|seed|path|time|size|bytes|format|repository|iteration|parent|children|seconds|warnings|error
+data|stem|69c7038f35a7cbd6|8bb3f4eee3e1487e|bb4fdd9bf7e9c448|-2078757027||t19711.7585642534s|7576d0501fccc8c5|12549|rds|local|vector|||0.39||
+example_mod_activities|stem|ced1e5304a8dcec3|c6f1d0f7891492a1|3442bd530578f3c0|1359795012||t19711.7772139454s|b5d22cd1f09b19a9|245767|rds|local|vector|||3.97||
+example_mod_activities_tiff|stem|c116b9eb9544e1c8|97f7ea3a3972bdd5|e4aae7f2954f1e99|253277898||t19711.7772341362s|b3654bf3682c79ca|86|rds|local|vector|||0.72|1m22mRemoved 6 rows containing missing values geom_point.. 1m22mRemoved 7 rows containing missing values geom_point.. 1m22mRemoved 8 rows containing missing values geom_point.|
+example_vig_activities|stem|af97ac864369b387|b1eda44610e55cad|b2b227a74bc731e4|310255281||t19711.7787122839s|104730442e1cc856|248025|rds|local|vector|||5.23||
+example_vig_activities_tiff|stem|2a151f9db6616a95|ec66da7906e570a7|d9850709fe6341b1|-1768404856||t19711.7787542968s|b3654bf3682c79ca|86|rds|local|vector|||0.89|1m22mRemoved 1 rows containing missing values position_stack.. 1m22mRemoved 1 rows containing missing values geom_label.. 1m22mUsing the size aesthetic in this geom was deprecated in ggplot2 3.4.0.36mℹ39m Please use linewidth in the default_aes field and elsewhere instead.. 1m22mRemoved 10 rows containing missing values geom_point.. 1m22mRemoved 12 rows containing missing values geom_point.. 1m22mRemoved 14 rows containing missing values geom_point.|
+guideline_confidence|stem|832e76c84065ce03|3971a34ca7f9af0a|a8da58a64ffd4020|806004795||t19711.7706480631s|d75060a82adba9d7|143599|rds|local|vector|||0.06||
+guideline_confidence_tiff|stem|16aa8a41c918ad0d|fbc538623eb2389a|20d09adf9b866f84|1158051751||t19711.7828077355s|40b3a10246f0095b|83|rds|local|vector|||0.38||
+knowledge_dose_adult|stem|b27702753f0f7bc3|0260349404e39915|268e66df25c818fe|936211098||t19711.7828027363s|d05e482b0ea855e0|171870|rds|local|vector|||0.15||
+knowledge_dose_adult_tiff|stem|57400a059577085a|9bacd4ab784f4a3e|b1dd359029cdc404|162757248||t19711.7828308582s|3e4acf685da8f273|84|rds|local|vector|||1.99||
+knowledge_dose_child|stem|dfb7951805d9b374|2939956f280165f7|65613aba556c3cc7|-1858038470||t19711.7706511363s|84d76f17b9fd13ec|140428|rds|local|vector|||0.07||
+knowledge_dose_child_tiff|stem|3c78aebc104e0f2d|13be616ec0ebc61f|4fd71b942387385f|1681076602||t19711.7810546197s|3e4acf685da8f273|84|rds|local|vector|||1.03||
+knowledge_older_adult|stem|4a8bc0bb4e081ec3|271c3eb07c980b0d|62395b8657fc9537|-460971065||t19711.7706496344s|221a326e3b11642b|144863|rds|local|vector|||0.08|1m22mExpected 26 pieces. Missing pieces filled with NA in 178 rows 1, 2, 3, 4, 5,6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, ....|
+knowledge_older_adult_tiff|stem|d3653ad4a2cb1319|6e5b250ff8f5909a|ed74e8b7a4c7daa7|1485788230||t19711.7810422925s|0e696b453c03de61|85|rds|local|vector|||0.13||
+knowledge_other_adult|stem|51d4f58923456b4f|db13e8ed87809f6a|fc53e40d91374327|-981624051||t19711.7706593731s|71932bfd50454205|144866|rds|local|vector|||0.03||
+knowledge_other_adult_tiff|stem|c2269cf001b805da|7218bc0204544499|aac5d01b517cea59|-2016602416||t19711.7810887813s|0e696b453c03de61|85|rds|local|vector|||0.2||
+knowledge_other_child|stem|116390f98536f871|3f8fb43860b7c298|028bfa54d066ec41|-128773820||t19711.7706607789s|86bce7e4ae8bfecb|144897|rds|local|vector|||0.04|1m22mExpected 26 pieces. Missing pieces filled with NA in 176 rows 1, 2, 3, 4, 5,6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 19, 20, 21, ....|
+knowledge_other_child_tiff|stem|2b22ff62158b368a|fa5dd99c97ab98d2|99569b7d9ca57aa0|-1701981773||t19711.7810929897s|0e696b453c03de61|85|rds|local|vector|||0.14||
+knowledge_sources|stem|785e5815a2b54d43|832f3919b31ebcf5|b72ca27bbe369260|1068831731||t19711.7706566633s|9d5edd6664752254|144738|rds|local|vector|||0.08|1m22mExpected 26 pieces. Missing pieces filled with NA in 177 rows 1, 2, 3, 4, 5,6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, ....|
+knowledge_sources_tiff|stem|c636b32caee9710b|e8106c1102e7ac4a|e3bf50f160e464ab|-1932260852||t19711.7810840533s|e655bbbdcbba1d63|81|rds|local|vector|||0.14||
+make_plot_tiff|function|6b43f6a7107c8204|||||||||||||||
+PA_importance|stem|94f4b4d486d682c4|2108b93495c4c09c|e87fa7fcbb7ded26|-680041019||t19711.7706466773s|93468dfbbf1add8f|126445|rds|local|vector|||0.05||
+PA_importance_tiff|stem|d03e037f41c87ca0|09625a2e9d6952ac|49f296a57c5982f5|641793297||t19711.7748433384s|dff9495c51b724c1|77|rds|local|vector|||0.24|1m22mRemoved 1 rows containing missing values position_stack.. 1m22mRemoved 1 rows containing missing values geom_label.|
+PA_levels|stem|60341225888b6dae|a3af7cd44613785c|6c86c4732a95767f|-1774844600||t19711.7706550916s|e252f4fc3eb1c393|148705|rds|local|vector|||0.08||
+PA_levels_tiff|stem|529e983a60f8462b|dfaf65f62de00c4b|9a78b1287407d184|1871232281||t19711.7810820296s|5507944482a0fcc9|73|rds|local|vector|||0.26||
+plot_example_mod_activities|function|6d3cc8c91d69361c|||||||||||||||
+plot_example_vig_activities|function|1e167300e6b4cb89|||||||||||||||
+plot_guideline_confidence|function|efcfcfaf3900cef1|||||||||||||||
+plot_knowledge_dose_adult|function|0981a5a1e401260d|||||||||||||||
+plot_knowledge_dose_child|function|a65cd6abf4241501|||||||||||||||
+plot_knowledge_older_adult|function|60a9d5149bda96a4|||||||||||||||
+plot_knowledge_other_adult|function|bdb32b4852f1fcf4|||||||||||||||
+plot_knowledge_other_child|function|3651be2697fd4a2b|||||||||||||||
+plot_knowledge_sources|function|f3f47bbc4d4b7c0d|||||||||||||||
+plot_PA_importance|function|160c174bbd5cd4f2|||||||||||||||
+plot_PA_levels|function|de023fcc5209a117|||||||||||||||
+plot_training|function|3785362b3cbce34c|||||||||||||||
+plot_training_settings|function|892ada5ae24c763b|||||||||||||||
+read_data|function|5ca5055730de74eb|||||||||||||||
+training|stem|fb2b3f0d3f69c4bf|09d6656147a6e0c9|51e3004bdd42faff|-1092531514||t19711.7736806536s|1425694911961b39|144625|rds|local|vector|||0.04||
+training_settings|stem|a47bb2f838fb83f7|01bf97b2d5f557d9|d075efbf15ca423f|-900032997||t19711.7706581097s|7493a23f1cfde17a|144694|rds|local|vector|||0.07|1m22mExpected 26 pieces. Missing pieces filled with NA in 178 rows 1, 2, 3, 4, 5,6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, ....|
+training_settings_tiff|stem|d6bdcde567637f87|3f78a9e9646b279d|500238d558b00855|-959062620||t19711.7810860518s|6281f79619f6778a|80|rds|local|vector|||0.14||
+training_tiff|stem|3d89293a4354dd0b|3167a9de6154387f|9a89a115d4d62a26|1968459754||t19711.7810957053s|c6fbfb9abe15abfd|72|rds|local|vector|||0.2||
